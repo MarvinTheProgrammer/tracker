@@ -14,11 +14,12 @@ defmodule Tracker.Training do
 
   def get_a_workout_by_id(id)  do
     query = from w in "workout",
-            where: w.exercise_id == id,
-            select: {w.exercise_id, w.max_weight, w.num_sets}
+            join: e in "exercise",
+            on: w.exercise_id == e.id,
+            where: w.total_workout_id == ^id,
+            select: {e.name, w.max_wieght, w.num_sets, w.inserted_at}
     query
     |> Repo.all()
-    |> Repo.preload(:exercise)
 
   end
 end
