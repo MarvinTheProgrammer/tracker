@@ -3,11 +3,8 @@ defmodule Tracker.Repo.Migrations.Workout do
 
   def change do
     create table("workout") do
-      add :exercise_id, references(:exercise), null: false
-      add :max_wieght, :integer
-      add :num_sets, :integer
-      add :total_workout_id, :integer
-
+      add :workout_type, :string
+      add :duration, :float
       timestamps()
     end
   end

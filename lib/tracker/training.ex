@@ -3,23 +3,23 @@ defmodule Tracker.Training do
   import Ecto.Query
 
   alias Tracker.Repo
-  alias Tracker.Training.Workout
+  alias Tracker.Training.{Results, Workout, Sets, Exercise}
 
-  def get_every_workout()  do
-    Workout
+  def get_results()  do
+    Results
     |> Repo.all()
-    |> Repo.preload(:exercise)
-
   end
 
-  def get_a_workout_by_id(id)  do
-    query = from w in "workout",
-            join: e in "exercise",
-            on: w.exercise_id == e.id,
-            where: w.total_workout_id == ^id,
-            select: {e.name, w.max_wieght, w.num_sets, w.inserted_at}
-    query
-    |> Repo.all()
+  def get_all_workouts() do
 
+    query = from w in "workout",
+      join: s in "sets",
+      on: w.id == s.workout_id,
+      join: e in "exercise",
+      on:  e.id == s.exercise_id,
+      select: {w.workout_type, w.duration, w.updated_at, s.max_weight, s.num_sets, e.body_part, e.name}
+
+   query
+    |> Repo.all()
   end
 end

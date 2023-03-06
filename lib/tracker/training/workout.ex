@@ -1,12 +1,11 @@
 defmodule Tracker.Training.Workout do
   use Ecto.Schema
-  alias Tracker.Training.Exercise
+  alias Tracker.Training.Sets
 
   schema "workout" do
-    belongs_to :exercise, Exercise
-    field :max_wieght, :integer
-    field :num_sets, :integer
-    field :total_workout_id, :integer
+    has_many :sets, Sets
+    field :workout_type, :string
+    field :duration, :float
 
     timestamps()
   end
