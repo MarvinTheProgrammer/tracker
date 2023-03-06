@@ -3,7 +3,7 @@ defmodule Tracker.Training do
   import Ecto.Query
 
   alias Tracker.Repo
-  alias Tracker.Training.{Results, Workout, Sets, Exercise, AllWorkouts}
+  alias Tracker.Training.{Results, Workout, Sets, Exercise}
 
   def get_results()  do
     Results
@@ -12,30 +12,27 @@ defmodule Tracker.Training do
 
   def get_all_workouts() do
 
-    query = from w in "workout",
-      join: s in "sets",
+    query = from w in Workout,
+      join: s in Sets,
       on: w.id == s.workout_id,
-      join: e in "exercise",
-      on:  e.id == s.exercise_id,
-      select: {w.workout_type, w.duration, w.updated_at, s.max_weight, s.num_sets, e.body_part, e.name}
+      join: e in Exercise,
+      on:  e.id == s.exercise_id
 
-   query
+    query
     |> Repo.all()
-    # |> Enum.reduce([],
-    # fn workout_data, all_workouts ->
-    #   work = %AllWorkouts{
-    #     workout_type: workout_data[0],
-    #     duration: workout_data[1],
-    #     date: workout_data[2],
-    #     sets: [
-    #       max_weight: workout_data[3],
-    #       num_sets: workout_data[4],
-    #       body_part: workout_data[5],
-    #       exercise_name: workout_data[6],
-    #     ]
-    #   }
-    #   [all_workouts | work]
-    # end)
+    |> Repo.preload(:sets)
+
+
+  #   query = from w in "workout",
+  #     join: s in "sets",
+  #     on: w.id == s.workout_id,
+  #     join: e in "exercise",
+  #     on:  e.id == s.exercise_id,
+  #     select: {w.workout_type, w.duration, w.updated_at, s.max_weight, s.num_sets, e.body_part, e.name}
+
+  #  query
+  #   |> Repo.all()
+
 
     # Results of Repo.all()
     # [

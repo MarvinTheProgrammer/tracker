@@ -6,7 +6,7 @@ defmodule TrackerWeb.TrainingLive do
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    socket = assign(socket, :workout, Training.get_all_workouts)
+    socket = assign(socket, :workout, Training.get_all_workouts())
 
     {:ok, socket}
   end
