@@ -6,8 +6,9 @@ defmodule TrackerWeb.TrainingLive do
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
+    #Join through and many-to-many by alchemist lab
     socket = assign(socket, :workout, Training.get_all_workouts())
-
+    IO.inspect(socket)
     {:ok, socket}
   end
 
@@ -17,7 +18,11 @@ defmodule TrackerWeb.TrainingLive do
     ~H"""
     <ul>
       <%= for workout <- @workout do%>
-        <li><%= <<workout>>%></li>
+        <li>Duration <%= workout.duration %></li>
+        <%= for sets <- workout.sets do%>
+        <li>Max Weight: <%= sets.max_weight %></li>
+        <li>Name: <%= sets.exercise.name %></li>
+        <% end %>
       <% end %>
     </ul>
     """

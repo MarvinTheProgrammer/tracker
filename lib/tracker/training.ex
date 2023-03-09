@@ -8,6 +8,28 @@ defmodule Tracker.Training do
   def get_results()  do
     Results
     |> Repo.all()
+    #need to sort by date then no need for reverse
+  end
+
+  def get_results_labels() do
+    get_results()
+    |> data_extractor([], [])
+  end
+
+  defp data_extractor([], label_acc, values_acc) do
+    label_reverse = label_acc |> Enum.reverse
+    values_reverse = values_acc |> Enum.reverse
+
+    %{:labels => label_reverse,
+      :values => values_reverse}
+  end
+
+  defp data_extractor([head | tail], label_acc, values_acc) do
+    date_string =
+      head.updated_at
+      |> NaiveDateTime.to_date()
+      |> Date.to_string()
+    data_extractor(tail, [date_string | label_acc], [head.weight | values_acc])
   end
 
   def get_all_workouts() do
@@ -20,7 +42,8 @@ defmodule Tracker.Training do
 
     query
     |> Repo.all()
-    |> Repo.preload(:sets)
+    |> Repo.preload(sets: [:exercise])
+    |> Enum.uniq()
 
 
   #   query = from w in "workout",

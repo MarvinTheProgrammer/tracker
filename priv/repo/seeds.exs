@@ -29,3 +29,6 @@ Repo.insert!(%Sets{workout_id: day2.id, exercise_id: cable_flys.id, max_weight: 
 
 Repo.insert!(%Results{waist: 40.5, arms: 14.5, weight: 170.0, inserted_at: ~N[2023-03-03 21:23:19], updated_at: ~N[2023-03-03 21:23:19] })
 Repo.insert!(%Results{waist: 40.0, arms: 15.0, weight: 165.0, inserted_at: ~N[2023-03-04 21:23:19], updated_at: ~N[2023-03-04 21:23:19] })
+Repo.insert!(%Results{waist: 40.0, arms: 15.0, weight: 164.0, inserted_at: ~N[2023-03-05 21:23:19], updated_at: ~N[2023-03-05 21:23:19] })
+Repo.insert!(%Results{waist: 39.5, arms: 15.0, weight: 162.0, inserted_at: ~N[2023-03-06 21:23:19], updated_at: ~N[2023-03-06 21:23:19] })
+Repo.insert!(%Results{waist: 39.0, arms: 15.5, weight: 160.0, inserted_at: ~N[2023-03-07 21:23:19], updated_at: ~N[2023-03-07 21:23:19] })

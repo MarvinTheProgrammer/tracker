@@ -17,7 +17,8 @@ defmodule TrackerWeb.Router do
   scope "/", TrackerWeb do
     pipe_through :browser
 
-    live "/", TrainingLive
+    live "/", ResultsLive
+    live "/workout", TrainingLive
   end
 
   # Other scopes may use custom stacks.
