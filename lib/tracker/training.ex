@@ -5,20 +5,23 @@ defmodule Tracker.Training do
   alias Tracker.Repo
   alias Tracker.Training.{Results, Workout, Sets, Exercise}
 
-  def get_results()  do
-    Results
+  def get_results(user_id)  do
+    query = from r in Results,
+    where: r.user_id == ^user_id,
+    order_by: [desc: r.updated_at]
+
+    query
     |> Repo.all()
-    #need to sort by date then no need for reverse
   end
 
-  def get_results_labels() do
-    get_results()
+  def get_results_labels(user_id) do
+    get_results(user_id)
     |> data_extractor([], [])
   end
 
   defp data_extractor([], label_acc, values_acc) do
-    label_reverse = label_acc |> Enum.reverse
-    values_reverse = values_acc |> Enum.reverse
+    label_reverse = label_acc
+    values_reverse = values_acc
 
     %{:labels => label_reverse,
       :values => values_reverse}

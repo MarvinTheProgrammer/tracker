@@ -16,15 +16,20 @@ defmodule TrackerWeb.TrainingLive do
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
-    <ul>
+    <div class="dropdown">
       <%= for workout <- @workout do%>
-        <li>Duration <%= workout.duration %></li>
-        <%= for sets <- workout.sets do%>
+      <div class="select">
+        <span class="selected">Duration <%= workout.duration %></span>
+        <div class="caret"></div>
+      </div>
+      <ul class="menu">
+      <%= for sets <- workout.sets do%>
         <li>Max Weight: <%= sets.max_weight %></li>
         <li>Name: <%= sets.exercise.name %></li>
-        <% end %>
       <% end %>
-    </ul>
+      </ul>
+      <% end %>
+    </div>
     """
   end
 end

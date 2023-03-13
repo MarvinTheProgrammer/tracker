@@ -1,9 +1,13 @@
 defmodule TrackerWeb.ResultsLive do
-  alias Tracker.Training
+  alias Tracker.{Training, Accounts}
   use TrackerWeb, :live_view
 
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :chart_data, Training.get_results_labels())}
+  def mount(_params, session, socket) do
+    user = Accounts.get_user_by_session_token(session["user_token"])
+    IO.inspect(user)
+    {:ok, assign(socket,
+    chart_data: Training.get_results_labels(user.id),
+    current_user: user)}
   end
 
   def render(assigns) do
